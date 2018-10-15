@@ -6,7 +6,7 @@
     <wxc-searchbar ref="wxc-searchbar"
       input-type='text'
       v-model = 'user.username'
-      default-value='test'
+      default-value='hitb'
       placeholder='用户名'
       @wxcSearchbarCancelClicked="NameOnCancel"
       @wxcSearchbarInputReturned="NameOnReturn"
@@ -40,6 +40,7 @@ import { WxcButton, WxcSearchbar } from 'weex-ui'
 const qs = require('qs')
 const stream = weex.requireModule('stream')
 const modal = weex.requireModule('modal')
+const urlConfig = require('../../utils/config.js')
 
 export default {
   name: 'login-page',
@@ -59,8 +60,8 @@ export default {
         type: 'json',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
         responseType: 'json',
-        url: 'http://www.jiankanglaifu.com/servers/login',
-        body: qs.stringify({ user: this.user })
+        url: `${urlConfig.http}:${urlConfig.port}/${urlConfig.router}/login`,
+        body: qs.stringify({ params: this.user })
       }, res => {
         if (res.ok) {
           if (res.data.login) {
